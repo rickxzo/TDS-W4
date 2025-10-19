@@ -235,11 +235,20 @@ async def execute(request: Request):
         return {"name": "get_ticket_status", "arguments": json.dumps({"ticket_id": q[-1][:-1]})}
     
     if "bonus" in q:
-        return {"name": "calculate_performance_bonus", "arguments": json.dumps({"employee_id": int(q[1]), "current_year": int(q[-1])})}
+        id = 0
+        year = 0
+        for i in q:
+            if i.isdigit():
+                if 1900<i<2026:
+                    year = int(i)
+                else:
+                    id = int(i)
+        return {"name": "calculate_performance_bonus", "arguments": json.dumps({"employee_id": id, "current_year": year})}
 
 if __name__ == "__main__":
     import uvicorn
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 

@@ -229,7 +229,7 @@ async def execute(request: Request):
     # Use FastAPI/Starlette Request object and query_params to get ?q=
     q = (request.query_params.get("q", "") or "").strip()
     q = q.split()
-
+    print(q)
     # Try every pattern in order and return the first match.
     if "status" in q:
         return {"name": "get_ticket_status", "arguments": json.dumps({"ticket_id": q[-1][:-1]})}
@@ -245,7 +245,7 @@ async def execute(request: Request):
                     id = int(i)
         return {"name": "calculate_performance_bonus", "arguments": json.dumps({"employee_id": id, "current_year": year})}
 
-    if "balance" in q:
+    if "balance" in q or "expense":
         print(q)
         id = 0
         for i in q:
@@ -276,11 +276,14 @@ async def execute(request: Request):
                 date = q[i]
             return {"name": "schedule_meeting", "arguments": json.dumps({"date": date, "time": time, "meeting_room": room})}
 
+    return {"nope": "nope}
+
 if __name__ == "__main__":
     import uvicorn
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 
 
 

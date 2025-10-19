@@ -245,11 +245,42 @@ async def execute(request: Request):
                     id = int(i)
         return {"name": "calculate_performance_bonus", "arguments": json.dumps({"employee_id": id, "current_year": year})}
 
+    if "balance" in q:
+        id = 0
+        for i in q:
+            if i.isdigit():
+                id = int(i)
+        return {"name": "get_expense_balance", "arguments": json.dumps({"employee_id": id})}
+
+    if "issue" in q:
+        id = 0
+        dept = ""
+        for i in range(len(q)):
+            if q[i].isdigit():
+                id = int(q[i])
+            if q[i] == "department":
+                dept = q[i-1]
+        return {"name": "report_office_issue", "arguments": json.dumps({"issue_code": id, "department": dept})
+                
+    if "meeting" in q:
+        time = ""
+        room = ""
+        date = ""
+        for i in range(len(q)):
+            if ":" in q[i]:
+                time = q[i]
+            if q[i] == "Room":
+                room = "Room" + q[i+1]
+            if "-" in q[i]:
+                date = q[i]
+            return {"name": "schedule_meeting", "arguments": json.dumps({"date": date, "time": time, "meeting_room": room})
+
 if __name__ == "__main__":
     import uvicorn
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 
 
 

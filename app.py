@@ -245,7 +245,7 @@ async def execute(request: Request):
                     id = int(i)
         return {"name": "calculate_performance_bonus", "arguments": json.dumps({"employee_id": id, "current_year": year})}
 
-    if "balance" in q or "expense":
+    if "balance" in q or "expense" in q:
         print(q)
         id = 0
         for i in q:
@@ -283,6 +283,7 @@ if __name__ == "__main__":
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 
 
 

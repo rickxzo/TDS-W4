@@ -239,7 +239,7 @@ async def execute(request: Request):
         year = 0
         for i in q:
             if i.isdigit():
-                if 1900<i<2026:
+                if 1900<int(i)<2026:
                     year = int(i)
                 else:
                     id = int(i)
@@ -250,5 +250,6 @@ if __name__ == "__main__":
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 
 

@@ -1,4 +1,4 @@
-fastapy
+fastapi
 pydantic
 requests
 dotenv

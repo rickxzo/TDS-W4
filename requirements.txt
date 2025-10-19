@@ -1,0 +1,4 @@
+fastapy
+pydantic
+requests
+dotenv

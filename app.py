@@ -249,8 +249,8 @@ async def execute(request: Request):
         print(q)
         id = 0
         for i in q:
-            print(i, i.isalnum())
-            if i.isalnum():
+            print(i, i.isnumeric())
+            if i.isnumeric():
                 id = int(i)
         return {"name": "get_expense_balance", "arguments": json.dumps({"employee_id": id})}
 
@@ -284,6 +284,7 @@ if __name__ == "__main__":
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 
 
 

@@ -260,7 +260,7 @@ async def execute(request: Request):
                 id = int(q[i])
             if q[i] == "department":
                 dept = q[i-1]
-        return {"name": "report_office_issue", "arguments": json.dumps({"issue_code": id, "department": dept})
+        return {"name": "report_office_issue", "arguments": json.dumps({"issue_code": id, "department": dept})}
                 
     if "meeting" in q:
         time = ""
@@ -273,13 +273,14 @@ async def execute(request: Request):
                 room = "Room" + q[i+1]
             if "-" in q[i]:
                 date = q[i]
-            return {"name": "schedule_meeting", "arguments": json.dumps({"date": date, "time": time, "meeting_room": room})
+            return {"name": "schedule_meeting", "arguments": json.dumps({"date": date, "time": time, "meeting_room": room})}
 
 if __name__ == "__main__":
     import uvicorn
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 
 
 

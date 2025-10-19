@@ -260,6 +260,8 @@ async def execute(request: Request):
         for i in range(len(q)):
             if q[i].isdigit():
                 id = int(q[i])
+            if q[i][:-1].isdigit():
+                id = int(q[i][:-1])
             if q[i] == "department":
                 dept = q[i-1]
         return {"name": "report_office_issue", "arguments": json.dumps({"issue_code": id, "department": dept})}
@@ -284,6 +286,7 @@ if __name__ == "__main__":
     # Run on localhost:8000
     port = int(os.environ.get('PORT', 5000))
     uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+
 
 
 

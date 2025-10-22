@@ -1,0 +1,35 @@
+name: Daily Commit
+
+on:
+  schedule:
+    # Runs once per day at a specific minute/hour (UTC). Replace "15 02" with the exact minute/hour you want.
+    - cron: '15 02 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  daily-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Commit update by 23f2004287@ds.study.iitm.ac.in
+        run: |
+          FILE=".github/daily-commit-log.txt"
+          mkdir -p "$(dirname "$FILE")"
+          echo "Automated daily commit: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$FILE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FILE"
+          COMMIT_MSG="Automated daily commit: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "$COMMIT_MSG"
+            git push
+          fi
